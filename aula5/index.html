@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>AngularJS</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script type="application/javascript" src="angular.min.js"></script>
+        <script>
+            angular.module('app', []);
+            angular.module('app').controller('zumbisCtrl', function($scope) {
+                $scope.cep = '12345-678';
+                $scope.bairro = 'Bairro';
+                $scope.ocorrencias = 123;
+            });
+        </script>
+    </head>
+    <body ng-app="app">
+        <div ng-controller="zumbisCtrl" class="container">
+            <div class="well">
+                <h1>Ocorrências de zumbis</h1>
+            </div>
+            <form name="formZumbi">
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input ng-model="cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <input ng-model="bairro" ng-minlength="4" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Número de ocorrências</label>
+                    <input ng-model="ocorrencias" required type="text" class="form-control" />
+                </div>
+                <button ng-disabled="formZumbi.$invalid" type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </body>
+</html>
