@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>AngularJS</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script type="application/javascript" src="angular.min.js"></script>
+        <script>
+            angular.module('app', []);
+            angular.module('app').controller('zumbisCtrl', function($scope) {
+                $scope.ocorrencias = [];
+
+                $scope.adiciona = function(ocorrencia, formIsValid) {
+                    if (formIsValid) {
+                        $scope.ocorrencias.push(angular.copy(ocorrencia));
+                    }
+                    else {
+                        alert('formulário inválido!');
+                    }
+                };
+            });
+
+            angular.module('app').directive('ngBlur', function() {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function($scope, $element, $attrs, ngModel) {
+                        $element.on('blur', function() {
+                            if (ngModel.$invalid) {
+                                $element.addClass('error');
+                            }
+                            else {
+                                $element.removeClass('error');
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+        <style>
+            .error {
+                border-color: red
+            }
+        </style>
+    </head>
+    <body ng-app="app">
+        <div ng-controller="zumbisCtrl" class="container">
+            <div class="well">
+                <h1>Ocorrências de zumbis</h1>
+            </div>
+            <table ng-if="ocorrencias.length > 0" class="table">
+                <thead>
+                    <th>CEP</th>
+                    <th>Bairro</th>
+                    <th>Número</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ocorrencia in ocorrencias">
+                        <td>{{ocorrencia.cep}}</td>
+                        <td>{{ocorrencia.bairro}}</td>
+                        <td>{{ocorrencia.numero}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form name="formZumbi">
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input ng-blur ng-model="ocorrencia.cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <input ng-blur ng-model="ocorrencia.bairro" ng-minlength="4" type="text" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Número de ocorrências</label>
+                    <input ng-blur ng-model="ocorrencia.numero" required type="text" class="form-control" />
+                </div>
+                <button ng-click="adiciona(ocorrencia, formZumbi.$valid)" type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+    </body>
+</html>
