@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="well">
+        <h1>Ocorrências de zumbis</h1>
+    </div>
+    <table ng-if="ocorrencias.length > 0" class="table">
+        <thead>
+            <th>CEP</th>
+            <th>Bairro</th>
+            <th>Número</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ocorrencia in ocorrencias">
+                <td>{{ocorrencia.cep}}</td>
+                <td>{{ocorrencia.bairro | upper}}</td>
+                <td>{{ocorrencia.numero}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <form name="formZumbi" novalidate>
+        <div class="form-group">
+            <label>CEP</label>
+            <input ng-blur ng-model="ocorrencia.cep" ng-cep-validator type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Bairro</label>
+            <input ng-blur ng-model="ocorrencia.bairro" ng-minlength="4" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Número de ocorrências</label>
+            <input ng-blur ng-model="ocorrencia.numero" required type="text" class="form-control" />
+        </div>
+        <ng-zumbi-submit submit="adiciona(ocorrencia)"></ng-zumbi-submit>
+    </form>
+</div>
